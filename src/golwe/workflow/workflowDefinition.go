@@ -3,7 +3,6 @@
  * User: remi
  * Date: 06/01/13
  * Time: 23:13
- * To change this template use File | Settings | File Templates.
  */
 package workflow
 import ("fmt"
