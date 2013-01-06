@@ -21,7 +21,7 @@
     </fork>
 
     <task name="task3" processor="task3.go">
-        <goto destination="end1"></goto>
+        <goto destination="end1"/>
     </task>
 
     <task name="task4" processor="task4.go">
@@ -36,7 +36,7 @@
 
     <!-- wait till signaled (meaning some process decide to unblock this workflow) then goto wait2 -->
     <wait name="wait1">
-        <goto destination="wait2"></goto>
+        <goto destination="wait2"/>
     </wait>
 
     <!-- wait during 5000 secondes -->
