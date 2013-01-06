@@ -6,8 +6,19 @@
  */
 package main
 
-import "fmt"
+import ("golwe/workflow"
+ "fmt")
 
 func main() {
-	fmt.Printf("Hello world!")
+
+	wfDef := workflow.Extract("src/resources/workflowsample.xml")
+
+	fmt.Printf("XMLName: %#v\n", wfDef.XMLName)
+	fmt.Printf("Workflow name: %v\n", wfDef.Name)
+	fmt.Printf("Start: %v\n", wfDef.Start)
+	fmt.Printf("End: %v\n", wfDef.End)
+	fmt.Printf("Task nodes: %v\n", wfDef.Task)
+	fmt.Printf("Fork nodes: %v\n", wfDef.Fork)
+	fmt.Printf("Wait nodes: %v\n", wfDef.Wait)
+	fmt.Printf("WaitFor nodes: %v\n", wfDef.WaitFor)
 }

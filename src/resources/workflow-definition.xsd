@@ -22,6 +22,13 @@
         </xs:sequence>
         <xs:attribute type="xs:string" name="destination" use="optional"/>
     </xs:complexType>
+    <xs:complexType name="waitforType">
+        <xs:sequence>
+            <xs:element type="gotoType" name="goto"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute type="xs:string" name="duration"/>
+    </xs:complexType>
     <xs:complexType name="taskType">
         <xs:sequence>
             <xs:element type="gotoType" name="goto" maxOccurs="unbounded" minOccurs="0">
@@ -37,8 +44,7 @@
         <xs:sequence>
             <xs:element type="gotoType" name="goto"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name" use="optional"/>
-        <xs:attribute type="xs:string" name="duration" use="optional"/>
+        <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
     <xs:complexType name="endType">
         <xs:simpleContent>
@@ -69,9 +75,14 @@
                     <xs:documentation>launch sub-process workflow whose name</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="waitType" name="wait" maxOccurs="unbounded" minOccurs="0">
+            <xs:element type="waitType" name="wait">
                 <xs:annotation>
-                    <xs:documentation>wait till signaled (meaning some process decide to unblock this workflow) then goto wait2  wait during 5000 secondes</xs:documentation>
+                    <xs:documentation>wait till signaled (meaning some process decide to unblock this workflow) then goto wait2</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="waitforType" name="waitfor">
+                <xs:annotation>
+                    <xs:documentation>wait during 5000 secondes</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element type="endType" name="end"/>

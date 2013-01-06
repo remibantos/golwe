@@ -40,9 +40,9 @@
     </wait>
 
     <!-- wait during 5000 secondes -->
-    <wait name="wait2" duration="5000">
+    <waitfor name="wait2" duration="5000">
         <goto destination="end1"/>
-    </wait>
+    </waitfor>
 
 
     <end name="end1"/>
