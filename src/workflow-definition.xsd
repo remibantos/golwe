@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="workflow" type="workflowType">
+        <xs:annotation>
+            <xs:documentation>Workflow definition with name/id sample</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="startType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="destination"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="gotoType" mixed="true">
+        <xs:sequence>
+            <xs:element type="xs:string" name="when" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>optional condition testing workflow context variable. Language TBD</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="destination" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="taskType">
+        <xs:sequence>
+            <xs:element type="gotoType" name="goto" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>transition to another activity</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="processor" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="waitType">
+        <xs:sequence>
+            <xs:element type="gotoType" name="goto"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="duration" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="endType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="workflowType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element type="startType" name="start">
+                <xs:annotation>
+                    <xs:documentation>Entry point</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="taskType" name="task">
+                <xs:annotation>
+                    <xs:documentation>task associated with processor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="forkType" name="fork">
+                <xs:annotation>
+                    <xs:documentation>Fork main process to several sub-processes running simultaneously.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="callType" name="call">
+                <xs:annotation>
+                    <xs:documentation>launch sub-process workflow whose name</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="waitType" name="wait" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>wait till signaled (meaning some process decide to unblock this workflow) then goto wait2  wait during 5000 secondes</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="endType" name="end"/>
+        </xs:choice>
+        <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+    <xs:complexType name="forkType">
+        <xs:sequence>
+            <xs:element type="gotoType" name="goto" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>transition to another activity</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="processor" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="callType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name"/>
+                <xs:attribute type="xs:string" name="workflow"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

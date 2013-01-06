@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Workflow definition with name/id sample -->
+<workflow name="sample"   >
+
+    <!-- Entry point -->
+    <start destination="task1"/>
+
+    <!-- task associated with processor -->
+    <task name="task1" processor="task1.go">
+        <!-- transition to another activity-->
+        <goto destination="fork1">
+            <!-- optional condition testing workflow context variable. Language TBD -->
+            <when>true</when>
+        </goto>
+    </task>
+
+    <!-- Fork main process to several sub-processes running simultaneously.-->
+    <fork name="fork1">
+        <goto destination="task3"/>
+        <goto destination="task4"/>
+    </fork>
+
+    <task name="task3" processor="task3.go">
+        <goto destination="end1"></goto>
+    </task>
+
+    <task name="task4" processor="task4.go">
+        <goto destination="callsubworkflowsample1">
+            <when>true</when>
+        </goto>
+        <goto destination="wait1"/>
+    </task>
+
+    <!-- launch sub-process workflow whose name-->
+    <call name="callsubworkflowsample1" workflow="sample1"/>
+
+    <!-- wait till signaled (meaning some process decide to unblock this workflow) then goto wait2 -->
+    <wait name="wait1">
+        <goto destination="wait2"></goto>
+    </wait>
+
+    <!-- wait during 5000 secondes -->
+    <wait name="wait2" duration="5000">
+        <goto destination="end1"/>
+    </wait>
+
+
+    <end name="end1"/>
+
+</workflow>
