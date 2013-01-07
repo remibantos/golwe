@@ -9,42 +9,54 @@ import ("fmt"
 	"encoding/xml"
 	"io/ioutil")
 
+type Node struct{
+
+}
+
 type Start struct {
 	Destination string `xml:"destination,attr"`
+	Node
 }
 
 type End struct {
 	Name         string `xml:"name,attr"`
+	Node
 }
 
 type Goto struct{
 	Destination string `xml:"destination,attr"`
+	computedNode Node
 }
 
 type Task struct {
 	Name         string `xml:"name,attr"`
 	Processor    string `xml:"processor,attr"`
 	Goto         []Goto `xml:"goto"`
+	Node
 }
 
 type Fork struct {
 	Name         string `xml:"name,attr"`
 	Goto         []Goto `xml:"goto"`
+	Node
 }
 
 type Call struct {
 	Workflow     string `xml:"workflow,attr"`
+	Node
 }
 
 type Wait struct {
 	Name         string `xml:"name,attr"`
 	Goto         Goto `xml:"goto"`
+	Node
 }
 
 type WaitFor struct {
 	Name        string `xml:"name,attr"`
 	Goto        Goto `xml:"goto"`
 	Duration 	int `xml:"duration,attr,omitempty"`
+	Node
 }
 
 
