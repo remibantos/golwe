@@ -1,7 +1,5 @@
-golwe
+WORK IN PROGRESS !
 =====
-
-! Work In Progress !
 
 Go Lightweight Workflow Engine.
 
