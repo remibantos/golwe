@@ -9,9 +9,13 @@ package main
 import ("golwe/workflow"
  "fmt")
 
+const (
+	workflowPath = "src/resources/workflowsample.xml";
+)
+
 func main() {
 
-	wfDef := workflow.Extract("src/resources/workflowsample.xml")
+	wfDef := workflow.ParseDefinition(workflowPath)
 
 	fmt.Printf("XMLName: %#v\n", wfDef.XMLName)
 	fmt.Printf("Workflow name: %v\n", wfDef.Name)
@@ -21,4 +25,11 @@ func main() {
 	fmt.Printf("Fork nodes: %v\n", wfDef.Fork)
 	fmt.Printf("Wait nodes: %v\n", wfDef.Wait)
 	fmt.Printf("WaitFor nodes: %v\n", wfDef.WaitFor)
+
+	fmt.Println("--------------------")
+
+	wf := workflow.BuildWorkflowGraph(wfDef);
+
+	fmt.Printf("Generated workflow graph: %v\n",workflow.ToString(wf))
+
 }

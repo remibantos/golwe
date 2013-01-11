@@ -32,7 +32,9 @@
     </task>
 
     <!-- launch sub-process workflow whose name-->
-    <call name="callsubworkflowsample1" workflow="sample1"/>
+    <call name="callsubworkflowsample1" workflow="sample1">
+        <goto destination="wait2"/>
+    </call>
 
     <!-- wait till signaled (meaning some process decide to unblock this workflow) then goto wait2 -->
     <wait name="wait1">
